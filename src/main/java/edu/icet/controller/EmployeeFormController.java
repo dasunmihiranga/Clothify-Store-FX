@@ -12,10 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -33,6 +30,8 @@ public class EmployeeFormController  implements Initializable {
     public TableColumn colAddress;
     public TableColumn colEmail;
     public JFXTextField txtPassword;
+    public JFXTextField txtSearch;
+    public Button btnSearch;
     @FXML
     private AnchorPane Anchor;
 
@@ -164,12 +163,11 @@ public class EmployeeFormController  implements Initializable {
         txtPassword.setText("");
     }
 
-    @FXML
-    void searchbtnOnAction(ActionEvent event) {
 
-        Employee employee =employeeService.searchByName(txtName.getText());
+
+    public void btnsearchOnAction(ActionEvent actionEvent) {
+        Employee employee =employeeService.searchByName(txtSearch.getText());
         setTextToValues(employee);
-
     }
 
     @Override

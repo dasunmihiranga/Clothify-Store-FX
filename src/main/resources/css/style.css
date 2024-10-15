@@ -69,5 +69,80 @@
     -fx-padding: 20px;  /* Padding inside the box */
 }
 
+#btnSearch{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black; /* Optional: Set text color */
+}
+#btnSearch:hover {
+    -fx-background-color: lightgray; /* Change background on hover */
+    -fx-text-fill: black; /* Optional: Change text color on hover */
+    -fx-cursor: hand; /* Show pointer to indicate it's clickable */
+}
+
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    -fx-background-insets: 0;
+    -fx-background-radius: 10; /* Rounded corners */
+    -fx-border-color: rgba(255, 255, 255, 0.3); /* Subtle border */
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0); /* Shadow for depth */
+    -fx-padding: 10;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent; /* Make the header transparent */
+}
+
+.table-row-cell {
+    -fx-background-color: transparent; /* Make rows transparent */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Slightly more visible when selected */
+}
+* {
+    -fx-text-fill: black; /* Set all text color to black */
+}
+
+ .button {
+    -fx-text-fill: white;
+}
+
+/* Style for all ComboBoxes in the application */
+/* Style for all ComboBoxes in the application */
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-border-color: #B0B0B0;  /* Light gray border */
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+}
+
+.combo-box .arrow {
+    -fx-background-color: transparent; /* Keep arrow transparent */
+    -fx-background-insets: 0, 0, 0, 0;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.combo-box-popup {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Popup with slight transparency */
+    -fx-border-color: #B0B0B0;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Text color for list items */
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1); /* Hover effect on list items */
+}
+
 
 

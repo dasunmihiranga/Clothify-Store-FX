@@ -11,10 +11,7 @@ import edu.icet.util.ServiceType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -32,6 +29,8 @@ public class SupplierFormController implements Initializable {
     public TableColumn colName;
     public TableColumn colCompany;
     public TableColumn colEmail;
+    public JFXTextField txtSearch;
+    public Button btnSearch;
     @FXML
     private AnchorPane Anchor;
 
@@ -93,7 +92,6 @@ public class SupplierFormController implements Initializable {
         });
 
         loadTable();
-        clear();
 
     }
 
@@ -110,7 +108,7 @@ public class SupplierFormController implements Initializable {
 
         boolean b = supplierService.addSupplier(supplier);
         if (b){
-            new Alert(Alert.AlertType.INFORMATION,"Employee Added Successfully").show();
+            new Alert(Alert.AlertType.INFORMATION,"Supplier Added Successfully").show();
         }
 
     }
@@ -175,9 +173,8 @@ public class SupplierFormController implements Initializable {
 
     }
 
-    @FXML
-    void searchbtnOnAction(ActionEvent event) {
-        Supplier supplier =supplierService.searchByName(txtName.getText());
+    public void btnsearchOnAction(ActionEvent actionEvent) {
+        Supplier supplier =supplierService.searchByName(txtSearch.getText());
         setTextToValues(supplier);
 
     }

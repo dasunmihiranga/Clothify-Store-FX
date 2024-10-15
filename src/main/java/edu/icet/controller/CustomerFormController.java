@@ -74,6 +74,10 @@ public class CustomerFormController  implements Initializable {
     @FXML
     private JFXTextField txtName;
 
+
+    @FXML
+    private JFXTextField txtSearch;
+
     SceneSwitchController sceneSwitch = SceneSwitchController.getInstance();
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
 
@@ -149,7 +153,7 @@ public class CustomerFormController  implements Initializable {
 
     @FXML
     void btnsearchOnAction(ActionEvent event) {
-        Customer customer =customerService.searchByName(txtName.getText());
+        Customer customer =customerService.searchByName(txtSearch.getText());
         setTextToValues(customer);
 
     }
