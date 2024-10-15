@@ -1,8 +1,8 @@
 package edu.icet.repository.custom.impl;
 
 import edu.icet.entity.CustomerEntity;
-import edu.icet.entity.EmployeeEntity;
-import edu.icet.repository.custom.CustomerDao;
+import edu.icet.entity.SupplierEntity;
+import edu.icet.repository.custom.SupplierDao;
 import edu.icet.util.HibernateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,33 +11,33 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class CustomerDaoImpl implements CustomerDao {
+public class SupplierDaoImpl implements SupplierDao {
     @Override
-    public boolean save(CustomerEntity customer) {
+    public boolean save(SupplierEntity supplier) {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
-        session.persist(customer);
+        session.persist(supplier);
         session.getTransaction().commit();
         session.close();
         return true;
     }
 
     @Override
-    public ObservableList<CustomerEntity> searchAll() {
+    public ObservableList<SupplierEntity> searchAll() {
         Session session = HibernateUtil.getSession();
-        ObservableList<CustomerEntity> customerEntityList = FXCollections.observableArrayList();
+        ObservableList<SupplierEntity> supplierEntityList = FXCollections.observableArrayList();
 
         try {
             session.getTransaction().begin();
-            List<CustomerEntity> list = session.createQuery("FROM CustomerEntity", CustomerEntity.class).getResultList();
+            List<SupplierEntity> list = session.createQuery("FROM SupplierEntity", SupplierEntity.class).getResultList();
             session.getTransaction().commit();
 
-            list.forEach(customerEntity -> {
-                System.out.println("--------> "+customerEntity);
-                customerEntityList.add(customerEntity);
+            list.forEach(supplierEntity -> {
+                System.out.println("--------> "+supplierEntity);
+                supplierEntityList.add(supplierEntity);
             });
 
-            return customerEntityList;  // Return the populated list
+            return supplierEntityList;  // Return the populated list
         } catch (Exception e) {
             session.getTransaction().rollback();
             e.printStackTrace();
@@ -48,15 +48,15 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public boolean update(CustomerEntity customer) {
+    public boolean update(SupplierEntity supplier) {
         Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
-        Query query=session.createQuery("UPDATE CustomerEntity SET name =:name,address =:address,email =:email WHERE id =:id");
+        Query query=session.createQuery("UPDATE SupplierEntity SET name =:name,company =:company,email =:email WHERE id =:id");
 
-        query.setParameter("name",customer.getName());
-        query.setParameter("address",customer.getAddress());
-        query.setParameter("email",customer.getEmail());
-        query.setParameter("id",customer.getId());
+        query.setParameter("name",supplier.getName());
+        query.setParameter("company",supplier.getCompany());
+        query.setParameter("email",supplier.getEmail());
+        query.setParameter("id",supplier.getId());
 
         int i =query.executeUpdate();
         session.getTransaction().commit();
@@ -69,7 +69,7 @@ public class CustomerDaoImpl implements CustomerDao {
     public boolean delete(String id) {
         Session session =HibernateUtil.getSession();
         session.getTransaction().begin();
-        Query query = session.createQuery("DELETE FROM CustomerEntity WHERE id=:id");
+        Query query = session.createQuery("DELETE FROM SupplierEntity WHERE id=:id");
         query.setParameter("id",id);
         int i =query.executeUpdate();
         session.getTransaction().commit();
@@ -79,16 +79,16 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public CustomerEntity search(String name) {
+    public SupplierEntity search(String name) {
         Session session = HibernateUtil.getSession();
         session.getTransaction().begin();
 
-        Query query = session.createQuery("FROM CustomerEntity WHERE name=:name");
+        Query query = session.createQuery("FROM SupplierEntity WHERE name=:name");
         query.setParameter("name",name);
 
-        CustomerEntity customerEntity = (CustomerEntity) query.uniqueResult();
+        SupplierEntity supplierEntity = (SupplierEntity) query.uniqueResult();
         session.close();
 
-        return customerEntity;
+        return supplierEntity;
     }
 }

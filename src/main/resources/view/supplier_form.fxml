@@ -144,15 +144,15 @@
                   </JFXTextField>
                </children>
             </Pane>
+            <TableView fx:id="tblSupplier" layoutX="100.0" layoutY="287.0" prefHeight="200.0" prefWidth="652.0">
+              <columns>
+                <TableColumn fx:id="colId" prefWidth="154.0" text="ID" />
+                <TableColumn fx:id="colName" prefWidth="176.0" text="Name" />
+                  <TableColumn fx:id="colCompany" prefWidth="148.0" text="Company" />
+                  <TableColumn fx:id="colEmail" prefWidth="173.0" text="Email" />
+              </columns>
+            </TableView>
          </children>
       </Pane>
-      <TableView fx:id="tblSuppliers" layoutX="350.0" layoutY="306.0" onMouseClicked="#rowdata" prefHeight="182.0" prefWidth="759.0">
-         <columns>
-            <TableColumn fx:id="colId" prefWidth="174.39999389648438" text="Supplier Id" />
-            <TableColumn fx:id="colName" prefWidth="206.40005493164062" text="Supplier Name" />
-            <TableColumn fx:id="colAddress" prefWidth="202.39996337890625" text="Supplier Address" />
-            <TableColumn fx:id="colEmail" prefWidth="174.39996337890625" text="Email" />
-         </columns>
-      </TableView>
    </children>
 </AnchorPane>
