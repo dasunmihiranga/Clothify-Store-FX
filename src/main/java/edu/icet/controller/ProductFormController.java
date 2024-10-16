@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class ProductFormController implements Initializable {
 
+    public JFXTextField txtSupplierSearch;
     @FXML
     private AnchorPane Anchor;
 
@@ -118,6 +119,8 @@ public class ProductFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        txtId.setText(productService.generateProductId());
+
         loadSupplierIds();
         loadCategory();
         loadSize();
@@ -126,7 +129,6 @@ public class ProductFormController implements Initializable {
         colProductName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colProductSize.setCellValueFactory(new PropertyValueFactory<>("size"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        colSupId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("category"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         tblProducts.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -143,7 +145,7 @@ public class ProductFormController implements Initializable {
         txtUnitprice.setText(String.valueOf(newValue.getUnitPrice()));
         cmbCategory.setValue(newValue.getCategory());
         cmbSize.setValue(newValue.getSize());
-        cmbSup.setValue(newValue.getSupplierId());
+        cmbSup.setValue(newValue.getSupplier().getId());
 
     }
     private void clear(){
@@ -189,6 +191,13 @@ public class ProductFormController implements Initializable {
         });
         cmbSup.setItems(supplierIds);
     }
+    public void btnSupplerSearchOnAction(ActionEvent event) {
+        Supplier supplier = supplierService.searchByName(txtSupplierSearch.getText());
+        System.out.println(supplier.getId());
+        cmbSup.setValue(supplier.getId());
+    }
+
+
 
     @FXML
     void AddbtnOnAction(ActionEvent event) {
@@ -197,17 +206,42 @@ public class ProductFormController implements Initializable {
                 txtName.getText(),
                 cmbSize.getValue(),
                 Integer.parseInt(txtQty.getText()),
-                cmbSup.getValue(),
                 Double.parseDouble(txtUnitprice.getText()),
-                cmbCategory.getValue()
+                cmbCategory.getValue(),
+                supplierService.searchById(cmbSup.getValue())
 
         );
 
-        boolean b = productService.addProduct(product);
-        if (b){
-            new Alert(Alert.AlertType.INFORMATION,"Product Added Successfully").show();
+
+        if (
+             !txtQty.getText().equals("") &&
+             !txtUnitprice.getText().equals("") &&
+             !txtName.getText().equals("") &&
+             !cmbSup.getValue().equals("") &&
+             !cmbSize.getValue().equals("")&&
+             !cmbCategory.getValue().equals("")
+        ) {
+
+
+            boolean b = productService.addProduct(product);
+            if (b) {
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Product Added");
+                alert.setContentText("Product Added Successfully..!");
+                alert.showAndWait();
+                clear();
+                txtId.setText(productService.generateProductId());
+
+            }
+
+            loadTable();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Somthing Wrong..!!!").show();
         }
-        loadTable();
+
+
         clear();
 
 
@@ -230,6 +264,7 @@ public class ProductFormController implements Initializable {
                     alert2.showAndWait();
                     clear();
                     loadTable();
+                    txtId.setText(productService.generateProductId());
                 }
             }
         }
@@ -251,9 +286,9 @@ public class ProductFormController implements Initializable {
                     txtName.getText(),
                     cmbSize.getValue(),
                     Integer.parseInt(txtQty.getText()),
-                    cmbSup.getValue(),
                     Double.parseDouble(txtUnitprice.getText()),
-                    cmbCategory.getValue()
+                    cmbCategory.getValue(),
+                    supplierService.searchById(cmbSup.getValue())
 
             );
 
@@ -265,6 +300,7 @@ public class ProductFormController implements Initializable {
                 alert.showAndWait();
                 clear();
                 loadTable();
+                txtId.setText(productService.generateProductId());
 
             }
         }else {
@@ -306,7 +342,6 @@ public class ProductFormController implements Initializable {
     public void homebtnOnAction(ActionEvent actionEvent) throws IOException {
         sceneSwitch.switchScene(Anchor, "dash.fxml");
     }
-
 
 
 

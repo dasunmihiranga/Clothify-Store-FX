@@ -56,7 +56,7 @@ public class ProductDaoImpl implements ProductDao {
         query.setParameter("name",product.getName());
         query.setParameter("size",product.getSize());
         query.setParameter("qty",product.getQty());
-        query.setParameter("supplierId",product.getSupplierId());
+        query.setParameter("supplierId",product.getSupplier().getId());
         query.setParameter("unitPrice",product.getUnitPrice());
         query.setParameter("category",product.getCategory());
         query.setParameter("productId",product.getProductId());
@@ -95,4 +95,17 @@ public class ProductDaoImpl implements ProductDao {
 
         return productEntity;
     }
+
+    @Override
+    public String getLatestId() {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+
+        Query query = session.createQuery("SELECT productId FROM ProductEntity ORDER BY productId DESC LIMIT 1");
+        String id = (String) query.uniqueResult();
+        session.close();
+        return id;
+    }
+
+
 }

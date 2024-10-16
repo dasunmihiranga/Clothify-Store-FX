@@ -83,6 +83,8 @@ public class SupplierFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        txtId.setText(supplierService.generateSupplierId());
+
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colCompany.setCellValueFactory(new PropertyValueFactory<>("company"));
@@ -106,9 +108,26 @@ public class SupplierFormController implements Initializable {
                 txtEmail.getText()
         );
 
-        boolean b = supplierService.addSupplier(supplier);
-        if (b){
-            new Alert(Alert.AlertType.INFORMATION,"Supplier Added Successfully").show();
+
+
+        if (!txtName.getText().equals("") && !txtEmail.getText().equals("") &&!txtcompany.getText().equals("")) {
+
+
+            boolean b = supplierService.addSupplier(supplier);
+            if (b) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Supplier Added");
+                alert.setContentText("Supplier Added Successfully..!");
+                alert.showAndWait();
+                clear();
+                txtId.setText(supplierService.generateSupplierId());
+
+            }
+
+            loadTable();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Somthing Wrong..!!!").show();
         }
 
     }
@@ -130,6 +149,7 @@ public class SupplierFormController implements Initializable {
                     alert2.showAndWait();
                     clear();
                     loadTable();
+                    txtId.setText(supplierService.generateSupplierId());
                 }
             }
         }
@@ -155,6 +175,7 @@ public class SupplierFormController implements Initializable {
                 alert.showAndWait();
                 clear();
                 loadTable();
+                txtId.setText(supplierService.generateSupplierId());
 
             }
         }else {

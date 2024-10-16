@@ -12,4 +12,6 @@ public interface CrudDao <T,S> extends SuperDao{
     boolean delete(S s);
 
     T search(S s);
+
+    S getLatestId();
 }

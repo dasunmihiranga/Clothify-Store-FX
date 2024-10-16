@@ -101,5 +101,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return employeeEntity;
     }
 
+    @Override
+    public String getLatestId() {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+        Query query = session.createQuery("SELECT id FROM EmployeeEntity ORDER BY id DESC LIMIT 1");
+        String id = (String) query.uniqueResult();
+        session.close();
+        return id;
+    }
+
 
 }

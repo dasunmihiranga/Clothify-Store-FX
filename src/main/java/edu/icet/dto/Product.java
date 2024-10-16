@@ -15,9 +15,9 @@ public class Product {
     private String name;
     private String size;
     private Integer qty;
-    private String supplierId;
     private Double unitPrice;
     private String category;
+    private Supplier supplier;
 
 
 }

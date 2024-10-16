@@ -51,4 +51,16 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity productEntity = productDao.search(name);
         return new ObjectMapper().convertValue(productEntity, Product.class);
     }
+
+    @Override
+    public String generateProductId() {
+        String lastProductId = productDao.getLatestId();
+        if (lastProductId==null){
+            return "P0001";
+        }
+
+        int number = Integer.parseInt(lastProductId.split("P")[1]);
+        number++;
+        return String.format("P%04d", number);
+    }
 }

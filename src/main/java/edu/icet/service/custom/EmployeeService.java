@@ -16,6 +16,8 @@ public interface EmployeeService extends SuperService {
 
     Employee searchByName (String name);
 
+    String generateEmployeeId();
+
 
 
 

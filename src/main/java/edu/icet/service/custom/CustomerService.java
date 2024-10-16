@@ -15,4 +15,6 @@ public interface CustomerService extends SuperService {
     boolean deleteCustomer(String id);
 
     Customer searchByName (String name);
+
+    String generateCustomerId();
 }

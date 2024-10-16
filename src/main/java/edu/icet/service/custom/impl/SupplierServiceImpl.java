@@ -52,4 +52,22 @@ public class SupplierServiceImpl implements SupplierService {
         SupplierEntity supplierEntity = supplierDao.search(name);
         return new ObjectMapper().convertValue(supplierEntity, Supplier.class);
     }
+
+    @Override
+    public Supplier searchById(String id) {
+        SupplierEntity supplierEntity =supplierDao.searchById(id);
+        return new ObjectMapper().convertValue(supplierEntity,Supplier.class);
+    }
+
+    @Override
+    public String generateSupplierId() {
+        String lastSupplierId = supplierDao.getLatestId();
+        if (lastSupplierId==null){
+            return "S0001";
+        }
+
+        int number = Integer.parseInt(lastSupplierId.split("S")[1]);
+        number++;
+        return String.format("S%04d", number);
+    }
 }

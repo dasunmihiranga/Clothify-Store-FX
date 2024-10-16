@@ -60,5 +60,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ObjectMapper().convertValue(employeeEntity,Employee.class);
     }
 
+    @Override
+    public String generateEmployeeId() {
+        String lastEmployeeId = employeeDao.getLatestId();
+        if (lastEmployeeId==null){
+            return "E0001";
+        }
+
+        int number = Integer.parseInt(lastEmployeeId.split("E")[1]);
+        number++;
+        return String.format("E%04d", number);
+    }
+
 
 }

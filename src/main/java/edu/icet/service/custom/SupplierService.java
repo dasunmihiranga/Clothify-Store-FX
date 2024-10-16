@@ -16,4 +16,8 @@ public interface SupplierService extends SuperService {
     boolean deleteSupplier(String id);
 
     Supplier searchByName (String name);
+
+    Supplier searchById (String id);
+
+    String generateSupplierId();
 }

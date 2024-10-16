@@ -89,19 +89,19 @@
                   <Image url="@../img/4905760.jpg" />
                </image>
             </ImageView>
-            <Pane fx:id="box1" layoutX="174.0" layoutY="86.0" prefHeight="262.0" prefWidth="501.0">
+            <Pane fx:id="box1" layoutX="104.0" layoutY="86.0" prefHeight="262.0" prefWidth="647.0">
                <children>
-                  <Button layoutX="240.0" layoutY="197.0" mnemonicParsing="false" onAction="#AddbtnOnAction" prefHeight="26.0" prefWidth="55.0" style="-fx-background-color: #27ae60;" text="Add" textFill="WHITE">
+                  <Button layoutX="526.0" layoutY="38.0" mnemonicParsing="false" onAction="#AddbtnOnAction" prefHeight="26.0" prefWidth="55.0" style="-fx-background-color: #27ae60;" text="Add" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" layoutX="332.0" layoutY="195.0" mnemonicParsing="false" onAction="#DeletebtnOnActiion" prefHeight="26.0" prefWidth="55.0" style="-fx-background-color: #c0392b;" text="Delete" textFill="WHITE">
+                  <Button alignment="CENTER" layoutX="526.0" layoutY="91.0" mnemonicParsing="false" onAction="#DeletebtnOnActiion" prefHeight="26.0" prefWidth="55.0" style="-fx-background-color: #c0392b;" text="Delete" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="420.0" layoutY="196.0" mnemonicParsing="false" onAction="#UpdatebtnOnAction" style="-fx-background-color: #EAB543;" text="Update">
+                  <Button layoutX="525.0" layoutY="148.0" mnemonicParsing="false" onAction="#UpdatebtnOnAction" style="-fx-background-color: #EAB543;" text="Update">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -111,20 +111,30 @@
                         <Font size="13.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtName" layoutX="275.0" layoutY="24.0" prefHeight="26.0" prefWidth="147.0" promptText="Product Name">
+                  <JFXTextField fx:id="txtName" layoutX="227.0" layoutY="25.0" prefHeight="26.0" prefWidth="147.0" promptText="Product Name">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </JFXTextField>
-                  <JFXTextField fx:id="txtQty" layoutX="275.0" layoutY="72.0" prefHeight="26.0" prefWidth="147.0" promptText="Qty">
+                  <JFXTextField fx:id="txtQty" layoutX="227.0" layoutY="91.0" prefHeight="26.0" prefWidth="147.0" promptText="Qty">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </JFXTextField>
                   <ComboBox fx:id="cmbSize" layoutX="52.0" layoutY="83.0" prefWidth="150.0" promptText="Product Size" stylesheets="@../css/style.css" />
                   <ComboBox fx:id="cmbSup" layoutX="52.0" layoutY="139.0" prefHeight="26.0" prefWidth="150.0" promptText="Supplier Id" stylesheets="@../css/style.css" />
-                  <JFXTextField fx:id="txtUnitprice" layoutX="275.0" layoutY="138.0" prefHeight="26.0" prefWidth="147.0" promptText="Unit Price" />
+                  <JFXTextField fx:id="txtUnitprice" layoutX="227.0" layoutY="199.0" prefHeight="26.0" prefWidth="147.0" promptText="Unit Price" />
                   <ComboBox fx:id="cmbCategory" layoutX="52.0" layoutY="199.0" prefHeight="26.0" prefWidth="150.0" promptText="Category" stylesheets="@../css/style.css" />
+                  <JFXTextField fx:id="txtSupplierSearch" layoutX="227.0" layoutY="148.0" prefHeight="25.0" prefWidth="147.0" promptText="Search Supplier By Name" />
+                  <JFXButton layoutX="386.0" layoutY="140.0" onAction="#btnSupplerSearchOnAction" prefHeight="40.0" prefWidth="43.0" text=" ">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/icons8-search-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </Pane>
             <Pane fx:id="box2" layoutX="284.0" layoutY="32.0" prefHeight="44.0" prefWidth="300.0">
@@ -146,13 +156,12 @@
             </Pane>
             <TableView fx:id="tblProducts" layoutX="28.0" layoutY="356.0" prefHeight="200.0" prefWidth="829.0">
               <columns>
-                <TableColumn fx:id="colProductId" prefWidth="92.0" text="Product ID" />
-                <TableColumn fx:id="colProductName" prefWidth="133.0" text="Product Name" />
-                  <TableColumn fx:id="colProductSize" prefWidth="122.0" text="Product Size" />
-                  <TableColumn fx:id="colQty" prefWidth="106.0" text="Qty" />
-                  <TableColumn fx:id="colSupId" prefWidth="119.0" text="Sup ID" />
-                  <TableColumn fx:id="colUnitPrice" prefWidth="127.0" text="Unit Price" />
-                  <TableColumn fx:id="colCategory" prefWidth="110.0" text="Category" />
+                <TableColumn fx:id="colProductId" prefWidth="124.0" text="Product ID" />
+                <TableColumn fx:id="colProductName" prefWidth="138.0" text="Product Name" />
+                  <TableColumn fx:id="colProductSize" prefWidth="130.0" text="Product Size" />
+                  <TableColumn fx:id="colQty" prefWidth="113.0" text="Qty" />
+                  <TableColumn fx:id="colUnitPrice" prefWidth="140.0" text="Unit Price" />
+                  <TableColumn fx:id="colCategory" prefWidth="147.0" text="Category" />
               </columns>
             </TableView>
          </children>

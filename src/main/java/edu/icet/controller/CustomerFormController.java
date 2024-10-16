@@ -89,11 +89,26 @@ public class CustomerFormController  implements Initializable {
                 txtAddress.getText(),
                 txtEmail.getText()
         );
-        boolean b=customerService.addCustomer(customer);
-        if (b){
-            new Alert(Alert.AlertType.INFORMATION,"Customer Added Successfully").show();
+
+        if (!txtName.getText().equals("") && !txtEmail.getText().equals("") && !txtAddress.getText().equals("")) {
+
+
+            boolean b=customerService.addCustomer(customer);
+            if (b) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Customer Added");
+                alert.setContentText("Customer Added Successfully..!");
+                alert.showAndWait();
+                clear();
+                txtId.setText(customerService.generateCustomerId());
+
+            }
+            loadTable();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Somthing Wrong..!!!").show();
         }
-        loadTable();
+
 
 
     }
@@ -115,6 +130,7 @@ public class CustomerFormController  implements Initializable {
                     alert2.showAndWait();
                     clear();
                     loadTable();
+                    txtId.setText(customerService.generateCustomerId());
                 }
             }
         }
@@ -139,6 +155,7 @@ public class CustomerFormController  implements Initializable {
                 alert.showAndWait();
                 clear();
                 loadTable();
+                txtId.setText(customerService.generateCustomerId());
 
             }
         }else {
@@ -160,6 +177,8 @@ public class CustomerFormController  implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        txtId.setText(customerService.generateCustomerId());
+
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));

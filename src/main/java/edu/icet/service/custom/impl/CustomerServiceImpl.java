@@ -54,4 +54,16 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerEntity customerEntity = customerDao.search(name);
         return new ObjectMapper().convertValue(customerEntity,Customer.class);
     }
+
+    @Override
+    public String generateCustomerId() {
+        String lastCustomerId = customerDao.getLatestId();
+        if (lastCustomerId==null){
+            return "C0001";
+        }
+
+        int number = Integer.parseInt(lastCustomerId.split("C")[1]);
+        number++;
+        return String.format("C%04d", number);
+    }
 }

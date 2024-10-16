@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -97,13 +98,13 @@
                   <Image url="@../img/Happy%20consumers%20choosing%20clothes%20in%20shop%20or%20boutique.jpg" />
                </image>
             </ImageView>
-            <Pane fx:id="box1" layoutX="253.0" layoutY="50.0" prefHeight="149.0" prefWidth="379.0" stylesheets="@../css/style.css">
+            <Pane fx:id="box1" layoutX="223.0" layoutY="50.0" prefHeight="149.0" prefWidth="441.0" stylesheets="@../css/style.css">
                <children>
-                  <Text layoutX="31.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Tahoma;" text="10:49:00">
+                  <Label fx:id="txtTime" layoutX="40.0" layoutY="20.0" text="10 : 49 : 00">
                      <font>
                         <Font name="System Bold" size="72.0" />
                      </font>
-                  </Text>
+                  </Label>
                </children>
             </Pane>
             <Pane fx:id="box2" layoutX="142.0" layoutY="215.0" prefHeight="247.0" prefWidth="143.0" stylesheets="@../css/style.css">
@@ -118,11 +119,11 @@
                         <Image url="@../img/icons8-customers-100%20(1).png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="37.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50">
+                  <Label fx:id="lblCustomer" layoutX="31.0" layoutY="152.0" prefHeight="75.0" prefWidth="74.0" text="50">
                      <font>
                         <Font name="System Bold" size="64.0" />
                      </font>
-                  </Text>
+                  </Label>
                </children>
             </Pane>
             <Pane fx:id="box3" layoutX="312.0" layoutY="215.0" prefHeight="247.0" prefWidth="280.0" stylesheets="@../css/style.css">
@@ -137,7 +138,7 @@
                         <Image url="@../img/icons8-sales-100.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="51.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10000">
+                  <Text fx:id="txtSales" layoutX="51.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10000">
                      <font>
                         <Font name="System Bold" size="64.0" />
                      </font>
@@ -156,11 +157,11 @@
                         <Image url="@../img/icons8-employee-64.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="37.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="20">
+                  <Label fx:id="lblEmployee" layoutX="30.0" layoutY="150.0" prefHeight="75.0" prefWidth="74.0" text="50">
                      <font>
                         <Font name="System Bold" size="64.0" />
                      </font>
-                  </Text>
+                  </Label>
                </children>
             </Pane>
          </children>

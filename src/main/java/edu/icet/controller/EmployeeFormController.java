@@ -82,7 +82,6 @@ public class EmployeeFormController  implements Initializable {
 
     EmployeeService employeeService=ServiceFactory.getInstance().getServiceType(ServiceType.EMPLOYEE);
 
-    //EmployeeServiceImpl employeeServiceImpl= new EmployeeServiceImpl();
 
     @FXML
     void AddbtnOnAction(ActionEvent event) {
@@ -95,11 +94,26 @@ public class EmployeeFormController  implements Initializable {
                 txtPassword.getText()
         );
 
-        boolean b=employeeService.addEmployee(employee);
-        if (b){
-            new Alert(Alert.AlertType.INFORMATION,"Employee Added Successfully").show();
+
+        if (!txtName.getText().equals("") && !txtEmail.getText().equals("") &&!txtPassword.getText().equals("") && !txtAddress.getText().equals("")) {
+
+
+            boolean b=employeeService.addEmployee(employee);
+            if (b) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Employee Added");
+                alert.setContentText("Employee Added Successfully..!");
+                alert.showAndWait();
+                clear();
+                txtId.setText(employeeService.generateEmployeeId());
+
+            }
+
+            loadTable();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Somthing Wrong..!!!").show();
         }
-        loadTable();
     }
 
     @FXML
@@ -119,6 +133,8 @@ public class EmployeeFormController  implements Initializable {
                     alert2.showAndWait();
                     clear();
                     loadTable();
+
+                    txtId.setText(employeeService.generateEmployeeId());
                 }
             }
         }
@@ -144,6 +160,7 @@ public class EmployeeFormController  implements Initializable {
                 alert.showAndWait();
                 clear();
                 loadTable();
+                txtId.setText(employeeService.generateEmployeeId());
 
             }
         }else {
@@ -172,6 +189,7 @@ public class EmployeeFormController  implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        txtId.setText(employeeService.generateEmployeeId());
 
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));

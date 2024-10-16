@@ -91,4 +91,15 @@ public class CustomerDaoImpl implements CustomerDao {
 
         return customerEntity;
     }
+
+    @Override
+    public String getLatestId() {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+
+        Query query = session.createQuery("SELECT id FROM CustomerEntity ORDER BY id DESC LIMIT 1");
+        String id = (String) query.uniqueResult();
+        session.close();
+        return id;
+    }
 }

@@ -91,4 +91,29 @@ public class SupplierDaoImpl implements SupplierDao {
 
         return supplierEntity;
     }
+
+    @Override
+    public String getLatestId() {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+
+        Query query = session.createQuery("SELECT id FROM SupplierEntity ORDER BY id DESC LIMIT 1");
+        String id = (String) query.uniqueResult();
+        session.close();
+        return id;
+    }
+
+    @Override
+    public SupplierEntity searchById(String id) {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+
+        Query query = session.createQuery("FROM SupplierEntity WHERE id=:id");
+        query.setParameter("id",id);
+
+        SupplierEntity supplierEntity = (SupplierEntity) query.uniqueResult();
+        session.close();
+
+        return supplierEntity;
+    }
 }
