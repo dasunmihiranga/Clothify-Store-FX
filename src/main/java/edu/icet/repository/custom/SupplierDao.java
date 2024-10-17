@@ -5,5 +5,5 @@ import edu.icet.entity.SupplierEntity;
 import edu.icet.repository.CrudDao;
 
 public interface SupplierDao extends CrudDao<SupplierEntity,String> {
-    SupplierEntity searchById (String id);
+
 }

@@ -1,5 +1,6 @@
 package edu.icet.repository;
 
+import edu.icet.entity.SupplierEntity;
 import javafx.collections.ObservableList;
 
 public interface CrudDao <T,S> extends SuperDao{
@@ -14,4 +15,6 @@ public interface CrudDao <T,S> extends SuperDao{
     T search(S s);
 
     S getLatestId();
+
+    T searchById (S s);
 }

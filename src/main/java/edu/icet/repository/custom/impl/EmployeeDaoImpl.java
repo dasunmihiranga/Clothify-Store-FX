@@ -1,6 +1,7 @@
 package edu.icet.repository.custom.impl;
 
 import edu.icet.entity.EmployeeEntity;
+import edu.icet.entity.ProductEntity;
 import edu.icet.repository.DaoFactory;
 import edu.icet.repository.custom.EmployeeDao;
 import edu.icet.util.DaoType;
@@ -109,6 +110,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
         String id = (String) query.uniqueResult();
         session.close();
         return id;
+    }
+
+    @Override
+    public EmployeeEntity searchById(String id) {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+
+        Query query = session.createQuery("FROM EmployeeEntity WHERE id=:id");
+        query.setParameter("id",id);
+
+        EmployeeEntity employeeEntity = (EmployeeEntity) query.uniqueResult();
+        session.close();
+
+        return employeeEntity;
     }
 
 

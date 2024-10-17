@@ -107,5 +107,19 @@ public class ProductDaoImpl implements ProductDao {
         return id;
     }
 
+    @Override
+    public ProductEntity searchById(String productId) {
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+
+        Query query = session.createQuery("FROM ProductEntity WHERE productId=:productId");
+        query.setParameter("productId",productId);
+
+        ProductEntity productEntity = (ProductEntity) query.uniqueResult();
+        session.close();
+
+        return productEntity;
+    }
+
 
 }

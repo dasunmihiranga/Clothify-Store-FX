@@ -3,6 +3,7 @@ package edu.icet.service.custom.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.icet.dto.Customer;
 import edu.icet.dto.Employee;
+import edu.icet.dto.Product;
 import edu.icet.entity.CustomerEntity;
 import edu.icet.entity.EmployeeEntity;
 import edu.icet.repository.DaoFactory;
@@ -53,6 +54,12 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer searchByName(String name) {
         CustomerEntity customerEntity = customerDao.search(name);
         return new ObjectMapper().convertValue(customerEntity,Customer.class);
+    }
+
+    @Override
+    public Customer searchById(String id) {
+        CustomerEntity customerEntity =customerDao.searchById(id);
+        return new ObjectMapper().convertValue(customerEntity, Customer.class);
     }
 
     @Override

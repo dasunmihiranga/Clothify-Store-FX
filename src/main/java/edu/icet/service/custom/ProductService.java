@@ -17,5 +17,7 @@ public interface ProductService  extends SuperService {
 
     Product searchByName (String name);
 
+    Product searchById (String id);
+
     String generateProductId();
 }

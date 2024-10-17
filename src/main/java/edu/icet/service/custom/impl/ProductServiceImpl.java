@@ -53,6 +53,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product searchById(String id) {
+        ProductEntity productEntity =productDao.searchById(id);
+        return new ObjectMapper().convertValue(productEntity,Product.class);
+    }
+
+    @Override
     public String generateProductId() {
         String lastProductId = productDao.getLatestId();
         if (lastProductId==null){
