@@ -120,7 +120,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblOrderId" layoutX="111.0" layoutY="13.0" text="OR#001">
+                  <Label fx:id="lblOrderId" layoutX="111.0" layoutY="13.0" text="OR#0001">
                      <font>
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
@@ -138,7 +138,7 @@
                   <Label fx:id="lblEmail" layoutX="90.0" layoutY="148.0" prefHeight="18.0" prefWidth="175.0" />
                </children>
             </Pane>
-            <Pane fx:id="box4" layoutX="36.0" layoutY="284.0" prefHeight="170.0" prefWidth="292.0">
+            <Pane fx:id="box4" layoutX="36.0" layoutY="284.0" prefHeight="189.0" prefWidth="292.0">
                <children>
                   <ComboBox fx:id="cmbItemCode" layoutX="37.0" layoutY="20.0" prefWidth="150.0" promptText="Product IDs" />
                   <Label layoutX="39.0" layoutY="70.0" prefHeight="18.0" prefWidth="56.0" text="DESC :" />
@@ -147,6 +147,8 @@
                   <Label fx:id="lblDesc" layoutX="102.0" layoutY="69.0" prefHeight="18.0" prefWidth="61.0" />
                   <Label fx:id="lblUnitPrice" layoutX="105.0" layoutY="100.0" prefHeight="18.0" prefWidth="42.0" />
                   <Label fx:id="lblSize" layoutX="109.0" layoutY="132.0" prefHeight="18.0" prefWidth="34.0" />
+                  <Label layoutX="40.0" layoutY="161.0" prefHeight="18.0" prefWidth="49.0" text="Stock" />
+                  <Label fx:id="lblStock" layoutX="99.0" layoutY="162.0" prefHeight="18.0" prefWidth="34.0" />
                </children>
             </Pane>
             <TableView fx:id="tblCart" layoutX="338.0" layoutY="84.0" prefHeight="366.0" prefWidth="495.0">
@@ -158,7 +160,7 @@
                   <TableColumn fx:id="colTotal" prefWidth="126.0" text="Total" />
                </columns>
             </TableView>
-            <TextField fx:id="txtQtyFroCustomer" layoutX="71.0" layoutY="510.0" onAction="#txtAddtoCartOnAction" prefHeight="25.0" prefWidth="78.0" promptText="QTY" />
+            <TextField fx:id="txtQty" layoutX="71.0" layoutY="510.0" prefHeight="25.0" prefWidth="78.0" promptText="QTY" />
             <JFXButton layoutX="172.0" layoutY="510.0" onAction="#btnAddToCartOnAction" style="-fx-background-color: #34495e;" text="Add to cart" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />

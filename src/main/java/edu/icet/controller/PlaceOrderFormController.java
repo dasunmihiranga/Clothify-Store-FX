@@ -1,10 +1,11 @@
 package edu.icet.controller;
 
 import com.jfoenix.controls.JFXButton;
-import edu.icet.dto.Customer;
-import edu.icet.dto.Product;
+import edu.icet.dto.*;
+import edu.icet.entity.OrderDetailEntity;
 import edu.icet.service.ServiceFactory;
 import edu.icet.service.custom.CustomerService;
+import edu.icet.service.custom.OrderService;
 import edu.icet.service.custom.ProductService;
 import edu.icet.util.ServiceType;
 import javafx.animation.Animation;
@@ -15,11 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -27,12 +25,17 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceOrderFormController implements Initializable {
 
+    public TextField txtQty;
+    public Label lblStock;
     @FXML
     private AnchorPane Anchor;
 
@@ -124,17 +127,20 @@ public class PlaceOrderFormController implements Initializable {
     private Pane navbar;
 
     @FXML
-    private TableView<?> tblCart;
+    private TableView<CartTM> tblCart;
 
     @FXML
     private TextField txtQtyFroCustomer;
 
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     ProductService productService =ServiceFactory.getInstance().getServiceType(ServiceType.PRODUCT);
+    OrderService orderService =ServiceFactory.getInstance().getServiceType(ServiceType.ORDER);
     SceneSwitchController sceneSwitch = SceneSwitchController.getInstance();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        lblOrderId.setText(orderService.generateOrderId());
 
         loadDateAndTime();
         loadCustomerIds();
@@ -152,6 +158,12 @@ public class PlaceOrderFormController implements Initializable {
             }
         });
 
+        colItemCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+
     }
 
     private void searchItem(String id) {
@@ -159,6 +171,7 @@ public class PlaceOrderFormController implements Initializable {
         lblDesc.setText(product.getName());
         lblUnitPrice.setText(String.valueOf(product.getUnitPrice()));
         lblSize.setText(product.getSize());
+        lblStock.setText(String.valueOf(product.getQty()));
 
     }
 
@@ -210,20 +223,66 @@ public class PlaceOrderFormController implements Initializable {
         cmbItemCode.setItems(productIds);
     }
 
+    ObservableList<CartTM> cartTMS =FXCollections.observableArrayList();
 
     @FXML
     void btnAddToCartOnAction(ActionEvent event) {
+
+
+        String productId =cmbItemCode.getValue();
+        String description =lblDesc.getText();
+        Integer qty = Integer.valueOf(txtQty.getText());
+        Double unitPrice = Double.parseDouble(lblUnitPrice.getText());
+        Double total =unitPrice*qty;
+
+        if(qty>Integer.parseInt(lblStock.getText())){
+            new Alert(Alert.AlertType.WARNING,"Invalid QTY! ").show();
+        }else {
+            cartTMS.add(new CartTM(productId,description,qty,unitPrice,total));
+            calcNetTotal();
+        }
+
+        tblCart.setItems(cartTMS);
+
+    }
+    public void calcNetTotal(){
+        Double total=0.0;
+        for (CartTM cartTM:cartTMS){
+            total+=cartTM.getTotal();
+        }
+        lblNetTotal.setText(total.toString());
 
     }
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
+        String orderId =lblOrderId.getText();
+        LocalDate orderDate =LocalDate.now();
+        String customerId =cmbCustomerIDs.getValue();
+        Customer customer=customerService.searchById(cmbCustomerIDs.getValue());
+
+
+        String productId =cmbItemCode.getValue();
+
+        Order order= new Order(orderId,customer,LocalDate.now(),Double.parseDouble(lblNetTotal.getText()));
+
+
+        ObservableList<OrderDetailEntity> orderDetails=FXCollections.observableArrayList();
+        cartTMS.forEach(obj->{
+            orderDetails.add(new OrderDetailEntity( obj.getProductId(), obj.getQty(), obj.getTotal()));
+        });
+
+        System.out.println(orderDetails);
+
+       
+
+        System.out.println(orderDetails);
+
+        boolean b = orderService.addOrder(order, orderDetails);
+
 
     }
-    @FXML
-    void txtAddtoCartOnAction(ActionEvent event) {
 
-    }
 
 
     public void customerManagementbtnOnAction(ActionEvent actionEvent) throws IOException {

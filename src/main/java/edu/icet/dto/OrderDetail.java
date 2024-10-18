@@ -5,14 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @ToString
 public class OrderDetail {
-    private String orderId;
-    private String itemCode;
+    private Order order;
+    private String productId;
     private Integer qty;
-    private Double discount;
+    private Double productTotal;
+
+    public OrderDetail(String productId, Integer qty, Double productTotal) {
+        this.productId = productId;
+        this.qty = qty;
+        this.productTotal = productTotal;
+    }
 
 }

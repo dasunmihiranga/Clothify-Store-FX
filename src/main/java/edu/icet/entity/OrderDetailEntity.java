@@ -9,23 +9,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Data
 
 @Entity
-public class ProductEntity {
+
+public class OrderDetailEntity {
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "OrderId")
+    private OrderEntity order;
+
     @Id
     private String productId;
-    private String name;
-    private String size;
     private Integer qty;
-    private Double unitPrice;
-    private String category;
+    private Double productTotal;
 
-    @ManyToOne
-    @JoinColumn(name="supplierId") //foreign key relation
-    private SupplierEntity supplier;
-
+    public OrderDetailEntity(String productId, Integer qty, Double productTotal) {
+        this.productId = productId;
+        this.qty = qty;
+        this.productTotal = productTotal;
+    }
 }
