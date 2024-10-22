@@ -1,5 +1,9 @@
 package edu.icet.controller;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
 import edu.icet.dto.ViewOrderTblObj;
 import edu.icet.service.ServiceFactory;
@@ -13,7 +17,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -160,4 +169,89 @@ public class ViewOrderFormController implements Initializable {
     }
 
 
+    public void btnGenerateReportOnAction(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF Report");
+
+        fileChooser.setInitialFileName("OrderReport.pdf");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        if (file != null) {
+            Document document = new Document();
+
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(file));
+                document.open();
+
+                Font titleFont = new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD, BaseColor.GREEN);
+                Paragraph title = new Paragraph("Order Report", titleFont);
+                title.setAlignment(Element.ALIGN_CENTER);
+                title.setSpacingAfter(20f);
+                document.add(title);
+
+                // Create a table with 4 columns
+                PdfPTable table = new PdfPTable(4);
+                table.setWidthPercentage(100);
+                table.setSpacingBefore(10f);
+                table.setSpacingAfter(10f);
+
+
+                Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.WHITE);
+                PdfPCell headerCell;
+
+                String[] headers = {"Order ID", "Date", "Net Total", "Customer ID"};
+                for (String header : headers) {
+                    headerCell = new PdfPCell(new Phrase(header, headerFont));
+                    headerCell.setBackgroundColor(BaseColor.DARK_GRAY);
+                    headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    headerCell.setPadding(10f);
+                    table.addCell(headerCell);
+                }
+
+
+                Font dataFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
+                PdfPCell dataCell;
+
+                ObservableList<ViewOrderTblObj> orders = tblViewOrders.getItems();
+                for (ViewOrderTblObj order : orders) {
+                    // Order ID
+                    dataCell = new PdfPCell(new Phrase(order.getId(), dataFont));
+                    dataCell.setPadding(8f);
+                    dataCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(dataCell);
+
+                    // Date
+                    dataCell = new PdfPCell(new Phrase(order.getDate().toString(), dataFont));
+                    dataCell.setPadding(8f);
+                    dataCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(dataCell);
+
+                    // Net Total
+                    dataCell = new PdfPCell(new Phrase(String.valueOf(order.getNetTotal()), dataFont));
+                    dataCell.setPadding(8f);
+                    dataCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(dataCell);
+
+                    // Customer ID
+                    dataCell = new PdfPCell(new Phrase(order.getCustomerId(), dataFont));
+                    dataCell.setPadding(8f);
+                    dataCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(dataCell);
+                }
+
+
+                document.add(table);
+
+                document.close();
+
+            } catch (DocumentException | FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

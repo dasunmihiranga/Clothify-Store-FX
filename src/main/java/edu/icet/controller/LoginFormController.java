@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class LoginFormController implements Initializable {
+public class LoginFormController {
 
     @FXML
     private AnchorPane Anchor;
@@ -41,7 +41,7 @@ public class LoginFormController implements Initializable {
     SceneSwitchController sceneSwitch = SceneSwitchController.getInstance();
     EmployeeService employeeService = ServiceFactory.getInstance().getServiceType(ServiceType.EMPLOYEE);
 
-    ObservableList<Employee> allEmployee;
+
 
 
     Validator validator =new Validator();
@@ -56,7 +56,7 @@ public class LoginFormController implements Initializable {
                 alert.setTitle("Error");
                 alert.setContentText("Enter valid username!!");
                 alert.showAndWait();
-                return;
+
             }else {
                 Employee employee =employeeService.searchByEmail(txtUserName.getText());
                 if (employee==null){
@@ -99,8 +99,5 @@ public class LoginFormController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        allEmployee= employeeService.getAllEmployee();
-    }
+
 }

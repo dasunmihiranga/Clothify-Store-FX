@@ -1,5 +1,10 @@
 package edu.icet.controller;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jfoenix.controls.JFXButton;
 import edu.icet.dto.*;
 import edu.icet.entity.OrderDetailEntity;
@@ -20,14 +25,21 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+
+import static java.lang.String.format;
 
 public class PlaceOrderFormController implements Initializable {
 
@@ -290,9 +302,70 @@ public class PlaceOrderFormController implements Initializable {
         System.out.println(orderDetails);
 
         boolean b = orderService.addOrder(order, orderDetails);
+        if (b) {
+            new Alert(Alert.AlertType.INFORMATION, "Place Order Successfully !").show();
 
+            generateBill(orderId, customer);
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to place the order!").show();
+        }
 
     }
+    private void generateBill(String orderId, Customer customer) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF Bill");
+        fileChooser.setInitialFileName("Bill_" + orderId + ".pdf");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        if (file != null) {
+            Document document = new Document();
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(file));
+                document.open();
+
+                // Add title
+                Font titleFont = new Font(Font.FontFamily.HELVETICA, 24, Font.BOLD, BaseColor.BLACK);
+                Paragraph title = new Paragraph("Clothing Store Bill", titleFont);
+                title.setAlignment(Element.ALIGN_CENTER);
+                title.setSpacingAfter(20f);
+                document.add(title);
+
+                // Add customer details
+                document.add(new Paragraph("Customer Name: " + customer.getName()));
+                document.add(new Paragraph("Customer ID: " + customer.getId()));
+                document.add(new Paragraph("Order ID: " + orderId));
+                document.add(new Paragraph("Date: " + LocalDate.now()));
+                document.add(new Paragraph("\n"));
+
+                // Add purchased items
+                document.add(new Paragraph("Purchased Items:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+                document.add(new Paragraph("-----------------------------------"));
+
+
+                for (CartTM cartTM : cartTMS) {
+                    String itemDescription = format("%s (Qty: %d) - Unit Price: %.2f - Total: %.2f",
+                            cartTM.getProductId(), cartTM.getQty(), cartTM.getUnitPrice(), cartTM.getTotal());
+                    document.add(new Paragraph(itemDescription));
+
+                }
+                Double netTotal =Double.parseDouble(lblNetTotal.getText());
+                document.add(new Paragraph("-----------------------------------"));
+                document.add(new Paragraph(format("Net Total: %.2f",netTotal)));
+
+                document.add(new Paragraph("\nThank you for shopping with us!", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
+                document.add(new Paragraph("We hope to see you again!"));
+
+                document.close();
+                new Alert(Alert.AlertType.INFORMATION, "Bill generated successfully!").show();
+            } catch (DocumentException | FileNotFoundException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to generate bill!").show();
+            }
+        }
+    }
+
 
 
 

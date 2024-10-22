@@ -94,12 +94,10 @@ public class EmployeeFormController  implements Initializable {
                 txtEmail.getText(),
                 txtAddress.getText(),
                 validator.hashPassword(txtPassword.getText())
-
         );
 
 
-        if (!txtName.getText().equals("") && !txtEmail.getText().equals("") &&!txtPassword.getText().equals("") && !txtAddress.getText().equals("")) {
-
+        if (!txtName.getText().equals("") && validator.isValidEmail(txtEmail.getText()) &&!txtPassword.getText().equals("") && !txtAddress.getText().equals("")) {
 
             boolean b=employeeService.addEmployee(employee);
             if (b) {
@@ -109,7 +107,6 @@ public class EmployeeFormController  implements Initializable {
                 alert.showAndWait();
                 clear();
                 txtId.setText(employeeService.generateEmployeeId());
-
             }
 
             loadTable();
