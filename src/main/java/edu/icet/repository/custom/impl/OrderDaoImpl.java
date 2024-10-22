@@ -37,6 +37,9 @@ public class OrderDaoImpl implements OrderDao {
             session.getTransaction().begin();
             List<OrderEntity> list = session.createQuery("FROM OrderEntity", OrderEntity.class).getResultList();
             session.getTransaction().commit();
+            list.forEach(l->{
+                l.setOrderDetails(null);
+            });
 
             list.forEach(orderEntity -> {
                 System.out.println("--------> "+orderEntity);

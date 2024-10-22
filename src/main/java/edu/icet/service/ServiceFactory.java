@@ -20,7 +20,6 @@ public class ServiceFactory {
             case SUPPLIER:return (T)new SupplierServiceImpl();
             case PRODUCT:return (T) new ProductServiceImpl();
             case ORDER:return (T)new OrderServiceImpl();
-            case ORDERDETAIL:return (T)new OrderDetailServiceImpl();
         }
         return null;
     }

@@ -1,10 +1,7 @@
 package edu.icet.service.custom.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.icet.dto.Customer;
-import edu.icet.dto.Employee;
-import edu.icet.dto.Order;
-import edu.icet.dto.OrderDetail;
+import edu.icet.dto.*;
 import edu.icet.entity.*;
 import edu.icet.repository.DaoFactory;
 import edu.icet.repository.custom.EmployeeDao;
@@ -15,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,14 +40,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ObservableList<Order> getAllOrders() {
+    public ObservableList<ViewOrderTblObj>getAllOrders() {
         ObservableList<OrderEntity> orderEntities = orderDao.searchAll();
 
-        ObservableList<Order> orderList = FXCollections.observableArrayList();
+        ObservableList<ViewOrderTblObj> orderList = FXCollections.observableArrayList();
 
         orderEntities.forEach(orderEntity -> {
-            System.out.println("<<<<<<<<<<<<<<<<<<<< "+orderEntity);
-            orderList.add(new ObjectMapper().convertValue(orderEntity, Order.class) );
+            String id= orderEntity.getId();
+            LocalDate date = orderEntity.getDate();
+            String customerId = orderEntity.getCustomer().getId();
+            Double netTotal = orderEntity.getNetTotal();
+
+            //System.out.println("<<<<<<<<<<<<<<<<<<<< "+orderEntity);
+            orderList.add(new ViewOrderTblObj(id,date,netTotal,customerId) );
         });
         return orderList;
     }

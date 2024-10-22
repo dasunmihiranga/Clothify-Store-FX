@@ -23,7 +23,7 @@
       -fx-padding: 5;
       -fx-font-size: 14px;
 }
-#btn1, #btn2, #btn3 ,#btn4,#btn5,#btn0{
+#btn1, #btn2, #btn3 ,#btn4,#btn5,#btn0 ,#btn6{
     -fx-background-color: white;        /* White background */
     -fx-font-weight: bold;              /* Bold font */
     -fx-text-fill: black;               /* Black text */
@@ -39,13 +39,13 @@
 }
 
 /* Hover effect for buttons */
-#btn1:hover, #btn2:hover, #btn3:hover, #btn4:hover ,#btn5:hover,#btn0:hover{
+#btn1:hover, #btn2:hover, #btn3:hover, #btn4:hover ,#btn5:hover,#btn0:hover,#btn6:hover{
     -fx-background-color: #f0f0f0;      /* Slightly darker background on hover */
        /* Neon green border remains on hover */
 }
 
 /* Pressed effect for buttons */
-#btn1:pressed, #btn2:pressed, #btn3:pressed ,#btn4:pressed,#btn5:pressed,#btn0:pressed{
+#btn1:pressed, #btn2:pressed, #btn3:pressed ,#btn4:pressed,#btn5:pressed,#btn0:pressed,#btn6:pressed{
     -fx-background-color: #e0e0e0;      /* Darker shade when pressed */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 5, 0, 0, 1);
 }
@@ -144,5 +144,24 @@
     -fx-background-color: rgba(0, 0, 0, 0.1); /* Hover effect on list items */
 }
 
+#txtUserName,#txtPassword {
+    -fx-background-color: white;
+    -fx-border-color: #789ADE;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px; /* Adjust this for the amount of rounding */
+    -fx-background-radius: 10px; /* Ensure rounded corners match */
+    -fx-padding: 5px; /* Optional: Adjust padding inside the TextField */
+}
+
+#forgetPassword{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black; /* Optional: Set text color */
+}
+#forgetPassword:hover {
+    -fx-background-color: lightgray; /* Change background on hover */
+    -fx-text-fill: black; /* Optional: Change text color on hover */
+    -fx-cursor: hand; /* Show pointer to indicate it's clickable */
+}
 
 

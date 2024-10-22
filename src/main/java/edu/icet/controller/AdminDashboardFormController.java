@@ -29,16 +29,14 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DashboardFormController implements Initializable {
+public class AdminDashboardFormController implements Initializable {
     public Label txtTime;
     public Text txtSales;
     public Label lblCustomer;
     public Label lblEmployee;
-    public Label lblTitle;
-
-
     @FXML
     private AnchorPane Anchor;
+    public Label lblTitle;
 
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     EmployeeService employeeService = ServiceFactory.getInstance().getServiceType(ServiceType.EMPLOYEE);
@@ -57,7 +55,7 @@ public class DashboardFormController implements Initializable {
         employeeCount();
 
     }
-    
+
 
     private void customerCount(){
         ObservableList<Customer> allCustomer = customerService.getAllCustomer();
@@ -72,7 +70,7 @@ public class DashboardFormController implements Initializable {
             lblCustomer.setText(String.valueOf(count));
         }
     }
-    
+
     private void employeeCount(){
         ObservableList<Employee> allEmployee = employeeService.getAllEmployee();
         lblEmployee.setText("0");
@@ -112,7 +110,7 @@ public class DashboardFormController implements Initializable {
             sceneSwitch.switchScene(Anchor, "customer_form.fxml");
         } else if (lblTitle.getText().equals("Employee Page")) {
             System.out.println("Hello");
-            
+
         }
 
     }
@@ -174,4 +172,5 @@ public class DashboardFormController implements Initializable {
             sceneSwitch.switchScene(Anchor,"login_form.fxml");
         }
     }
+
 }

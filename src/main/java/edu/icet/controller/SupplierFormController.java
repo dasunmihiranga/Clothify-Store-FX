@@ -243,5 +243,17 @@ public class SupplierFormController implements Initializable {
     }
 
 
+    public void viewOrderHistorybtnOnAction(ActionEvent event) throws IOException {
+        sceneSwitch.switchScene(Anchor, "viewOrder_form.fxml");
 
+    }
+    public void btnLoginOnAction(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting");
+        alert.setContentText("Are you sure want Log out !");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get()== ButtonType.OK){
+            sceneSwitch.switchScene(Anchor,"login_form.fxml");
+        }
+    }
 }

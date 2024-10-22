@@ -1,118 +1,102 @@
 package edu.icet.controller;
 
-import edu.icet.dto.Customer;
-import edu.icet.dto.Employee;
+import com.jfoenix.controls.JFXButton;
+import edu.icet.dto.ViewOrderTblObj;
 import edu.icet.service.ServiceFactory;
-import edu.icet.service.custom.CustomerService;
-import edu.icet.service.custom.EmployeeService;
+import edu.icet.service.custom.OrderService;
 import edu.icet.util.ServiceType;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class DashboardFormController implements Initializable {
-    public Label txtTime;
-    public Text txtSales;
-    public Label lblCustomer;
-    public Label lblEmployee;
-    public Label lblTitle;
-
+public class ViewOrderFormController implements Initializable {
 
     @FXML
     private AnchorPane Anchor;
 
-    CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
-    EmployeeService employeeService = ServiceFactory.getInstance().getServiceType(ServiceType.EMPLOYEE);
+
+    @FXML
+    private Pane body;
+
+    @FXML
+    private JFXButton btn0;
+
+    @FXML
+    private JFXButton btn1;
+
+    @FXML
+    private JFXButton btn2;
+
+    @FXML
+    private JFXButton btn3;
+
+    @FXML
+    private JFXButton btn4;
+
+    @FXML
+    private JFXButton btn5;
+
+    @FXML
+    private TableColumn<?, ?> colCustomerId;
+
+    @FXML
+    private TableColumn<?, ?> colDate;
+
+    @FXML
+    private TableColumn<?, ?> colNetTotal;
+
+    @FXML
+    private TableColumn<?, ?> colOrderId;
+
+    @FXML
+    private Pane navbar;
+
+    public Label lblTitle;
+
+    @FXML
+    private TableView<ViewOrderTblObj> tblViewOrders;
 
     SceneSwitchController sceneSwitch = SceneSwitchController.getInstance();
 
+    OrderService orderService= ServiceFactory.getInstance().getServiceType(ServiceType.ORDER);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadDateAndTime();
-        loadComponenets();
+        colOrderId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colNetTotal.setCellValueFactory(new PropertyValueFactory<>("netTotal"));
+        colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
-    }
-
-    private void loadComponenets() {
-        customerCount();
-        employeeCount();
-
-    }
-    
-
-    private void customerCount(){
-        ObservableList<Customer> allCustomer = customerService.getAllCustomer();
-        lblCustomer.setText("0");
-
-        int count=0;
-        for (Customer customer :allCustomer){
-            count++;
-        }
-
-        if (count > 0){
-            lblCustomer.setText(String.valueOf(count));
-        }
-    }
-    
-    private void employeeCount(){
-        ObservableList<Employee> allEmployee = employeeService.getAllEmployee();
-        lblEmployee.setText("0");
-
-        int count=0;
-        for (Employee employee :allEmployee){
-            count++;
-        }
-
-        if (count > 0){
-            lblEmployee.setText(String.valueOf(count));
-        }
+        loadTable();
 
 
     }
-
-    private void loadDateAndTime(){
-        Date date =new Date();
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        String dateNow=f.format(date);
-
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            LocalTime now = LocalTime.now();
-            txtTime.setText(now.getHour() + " : " + now.getMinute() + " : " + now.getSecond());
-        }),
-                new KeyFrame(Duration.seconds(1))
-        );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
+    public void loadTable(){
+        ObservableList<ViewOrderTblObj> allOrders = orderService.getAllOrders();
+        tblViewOrders.setItems(allOrders);
 
     }
+
+
+
+
 
     public void customerManagementbtnOnAction(ActionEvent actionEvent) throws IOException {
         if (lblTitle.getText().equals("Admin Page")) {
             sceneSwitch.switchScene(Anchor, "customer_form.fxml");
         } else if (lblTitle.getText().equals("Employee Page")) {
             System.out.println("Hello");
-            
+
         }
 
     }
@@ -174,4 +158,6 @@ public class DashboardFormController implements Initializable {
             sceneSwitch.switchScene(Anchor,"login_form.fxml");
         }
     }
+
+
 }

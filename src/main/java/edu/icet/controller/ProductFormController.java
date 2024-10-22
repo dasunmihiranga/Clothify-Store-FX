@@ -110,6 +110,8 @@ public class ProductFormController implements Initializable {
     @FXML
     private JFXTextField txtUnitprice;
 
+    public Label lblTitle;
+
 
     SceneSwitchController sceneSwitch = SceneSwitchController.getInstance();
 
@@ -319,11 +321,22 @@ public class ProductFormController implements Initializable {
 
 
     public void customerManagementbtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "customer_form.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "customer_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            System.out.println("Hello");
+
+        }
+
     }
 
     public void placeOrderbtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "placeOrder_form.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "placeOrder_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "placeOrder_E_form.fxml");
+
+        }
     }
 
     public void supplierDetailsbtnOnAction(ActionEvent actionEvent) throws IOException {
@@ -331,7 +344,13 @@ public class ProductFormController implements Initializable {
     }
 
     public void productDetailsbtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "product_form.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "product_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "product_E_form.fxml");
+
+        }
+
     }
 
     public void employeeManagementbtnOnAction(ActionEvent actionEvent) throws IOException {
@@ -340,9 +359,32 @@ public class ProductFormController implements Initializable {
     }
 
     public void homebtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "dash.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "dash.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "dash_E_form.fxml");
+
+        }
+
     }
 
 
+    public void viewOrderHistorybtnOnAction(ActionEvent event) throws IOException {
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "viewOrder_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "viewOrder_E_form.fxml");
 
+        }
+
+    }
+    public void btnLoginOnAction(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting");
+        alert.setContentText("Are you sure want Log out !");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get()== ButtonType.OK){
+            sceneSwitch.switchScene(Anchor,"login_form.fxml");
+        }
+    }
 }

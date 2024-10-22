@@ -27,10 +27,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PlaceOrderFormController implements Initializable {
 
@@ -131,6 +128,8 @@ public class PlaceOrderFormController implements Initializable {
 
     @FXML
     private TextField txtQtyFroCustomer;
+
+    public Label lblTitle;
 
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     ProductService productService =ServiceFactory.getInstance().getServiceType(ServiceType.PRODUCT);
@@ -238,13 +237,37 @@ public class PlaceOrderFormController implements Initializable {
         if(qty>Integer.parseInt(lblStock.getText())){
             new Alert(Alert.AlertType.WARNING,"Invalid QTY! ").show();
         }else {
-            cartTMS.add(new CartTM(productId,description,qty,unitPrice,total));
-            calcNetTotal();
-        }
+            if (resolveItemDuplicate(productId,qty,total)){
+                tblCart.setItems(cartTMS);
+                tblCart.refresh();
+                System.out.println("resolve duplicate");
 
+            }else{
+                cartTMS.add(new CartTM(productId,description,qty,unitPrice,total));
+                calcNetTotal();
+
+            }
+
+        }
         tblCart.setItems(cartTMS);
+        tblCart.refresh();
 
     }
+
+    private boolean resolveItemDuplicate(String productId ,Integer qty,Double total) {
+        for (CartTM cartTM:cartTMS){
+
+            if(cartTM.getProductId().equals(productId)){
+                cartTM.setQty(cartTM.getQty()+qty);
+                cartTM.setTotal(cartTM.getTotal()+total);
+                calcNetTotal();
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     public void calcNetTotal(){
         Double total=0.0;
         for (CartTM cartTM:cartTMS){
@@ -257,25 +280,13 @@ public class PlaceOrderFormController implements Initializable {
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         String orderId =lblOrderId.getText();
-        LocalDate orderDate =LocalDate.now();
-        String customerId =cmbCustomerIDs.getValue();
         Customer customer=customerService.searchById(cmbCustomerIDs.getValue());
-
-
-        String productId =cmbItemCode.getValue();
-
         Order order= new Order(orderId,customer,LocalDate.now(),Double.parseDouble(lblNetTotal.getText()));
-
-
         ObservableList<OrderDetailEntity> orderDetails=FXCollections.observableArrayList();
         cartTMS.forEach(obj->{
             orderDetails.add(new OrderDetailEntity( obj.getProductId(), obj.getQty(), obj.getTotal()));
         });
-
         System.out.println(orderDetails);
-
-       
-
         System.out.println(orderDetails);
 
         boolean b = orderService.addOrder(order, orderDetails);
@@ -286,11 +297,22 @@ public class PlaceOrderFormController implements Initializable {
 
 
     public void customerManagementbtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "customer_form.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "customer_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            System.out.println("Hello");
+
+        }
+
     }
 
     public void placeOrderbtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "placeOrder_form.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "placeOrder_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "placeOrder_E_form.fxml");
+
+        }
     }
 
     public void supplierDetailsbtnOnAction(ActionEvent actionEvent) throws IOException {
@@ -298,7 +320,13 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     public void productDetailsbtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "product_form.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "product_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "product_E_form.fxml");
+
+        }
+
     }
 
     public void employeeManagementbtnOnAction(ActionEvent actionEvent) throws IOException {
@@ -307,8 +335,32 @@ public class PlaceOrderFormController implements Initializable {
     }
 
     public void homebtnOnAction(ActionEvent actionEvent) throws IOException {
-        sceneSwitch.switchScene(Anchor, "dash.fxml");
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "dash.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "dash_E_form.fxml");
+
+        }
+
     }
 
 
+    public void viewOrderHistorybtnOnAction(ActionEvent event) throws IOException {
+        if (lblTitle.getText().equals("Admin Page")) {
+            sceneSwitch.switchScene(Anchor, "viewOrder_form.fxml");
+        } else if (lblTitle.getText().equals("Employee Page")) {
+            sceneSwitch.switchScene(Anchor, "viewOrder_E_form.fxml");
+
+        }
+
+    }
+    public void btnLoginOnAction(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting");
+        alert.setContentText("Are you sure want Log out !");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get()== ButtonType.OK){
+            sceneSwitch.switchScene(Anchor,"login_form.fxml");
+        }
+    }
 }
