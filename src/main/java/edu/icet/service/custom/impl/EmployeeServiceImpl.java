@@ -72,5 +72,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return String.format("E%04d", number);
     }
 
+    @Override
+    public Employee searchByEmail(String email) {
+        EmployeeEntity employeeEntity = employeeDao.searchByEmail(email);
+        return new ObjectMapper().convertValue(employeeEntity,Employee.class);
+    }
+
 
 }

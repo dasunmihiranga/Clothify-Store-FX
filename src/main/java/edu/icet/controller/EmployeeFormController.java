@@ -7,6 +7,7 @@ import edu.icet.service.ServiceFactory;
 import edu.icet.service.custom.EmployeeService;
 import edu.icet.service.custom.impl.EmployeeServiceImpl;
 import edu.icet.util.ServiceType;
+import edu.icet.util.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -81,6 +82,7 @@ public class EmployeeFormController  implements Initializable {
 
 
     EmployeeService employeeService=ServiceFactory.getInstance().getServiceType(ServiceType.EMPLOYEE);
+    Validator validator= new Validator();
 
 
     @FXML
@@ -91,7 +93,8 @@ public class EmployeeFormController  implements Initializable {
                 txtName.getText(),
                 txtEmail.getText(),
                 txtAddress.getText(),
-                txtPassword.getText()
+                validator.hashPassword(txtPassword.getText())
+
         );
 
 
@@ -149,7 +152,7 @@ public class EmployeeFormController  implements Initializable {
                     txtName.getText(),
                     txtEmail.getText(),
                     txtAddress.getText(),
-                    txtPassword.getText()
+                    validator.hashPassword(txtPassword.getText())
             );
 
             boolean isUpdated = employeeService.updateEmployee(employee);

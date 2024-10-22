@@ -4,4 +4,5 @@ import edu.icet.entity.EmployeeEntity;
 import edu.icet.repository.CrudDao;
 
 public interface EmployeeDao extends CrudDao<EmployeeEntity,String> {
+    EmployeeEntity searchByEmail(String email);
 }

@@ -18,6 +18,8 @@ public interface EmployeeService extends SuperService {
 
     String generateEmployeeId();
 
+    Employee searchByEmail(String email);
+
 
 
 

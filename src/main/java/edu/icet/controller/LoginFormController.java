@@ -4,6 +4,7 @@ import edu.icet.dto.Employee;
 import edu.icet.service.ServiceFactory;
 import edu.icet.service.custom.EmployeeService;
 import edu.icet.util.ServiceType;
+import edu.icet.util.Validator;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,30 +43,48 @@ public class LoginFormController implements Initializable {
 
     ObservableList<Employee> allEmployee;
 
+
+    Validator validator =new Validator();
+
     @FXML
     void loginbtnOnAction(ActionEvent event) throws IOException {
         if (txtUserName.getText().equals("Admin") && txtPassword.getText().equals("1234")){
             sceneSwitch.switchScene(Anchor, "dash.fxml");
-        }else {
-            for (Employee employee : allEmployee){
-                if (employee.getEmail().equals(txtUserName.getText())){
-                    if (employee.getPassword().equals(txtPassword.getText())){
-                        sceneSwitch.switchScene(Anchor,"dash_E_form.fxml");
-                    } else {
-                        new Alert(Alert.AlertType.ERROR,"UserName Wrong !").show();
-                    }
-                } else if (employee.getPassword().equals(txtPassword.getText())) {
+        }else{
+            if (!validator.isValidEmail(txtUserName.getText())){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setContentText("Enter valid username!!");
+                alert.showAndWait();
+                return;
+            }else {
+                Employee employee =employeeService.searchByEmail(txtUserName.getText());
+                if (employee==null){
+                    new Alert(Alert.AlertType.ERROR,"Loging Error !").show();
+                }else{
                     if (employee.getEmail().equals(txtUserName.getText())){
-                        sceneSwitch.switchScene(Anchor,"dash_E_form.fxml");
-                    }else {
-                        new Alert(Alert.AlertType.ERROR,"Password Wrong !").show();
-                    }
+                        if (validator.checkPassword(txtPassword.getText(),employee.getPassword())){
+                            new Alert(Alert.AlertType.INFORMATION,"Login Successfully !").show();
+                            sceneSwitch.switchScene(Anchor,"dash_E_form.fxml");
+                        } else {
+                            new Alert(Alert.AlertType.ERROR,"UserName Wrong !").show();
+                        }
+                    } else if (validator.checkPassword(txtPassword.getText(),employee.getPassword())) {
+                        if (employee.getEmail().equals(txtUserName.getText())){
+                            new Alert(Alert.AlertType.INFORMATION,"Login Successfully !").show();
+                            sceneSwitch.switchScene(Anchor,"dash_E_form.fxml");
+                        }else {
+                            new Alert(Alert.AlertType.ERROR,"Password Wrong !").show();
+                        }
 
-                }else {
-                    new Alert(Alert.AlertType.ERROR,"UserName & Password  Wrong !").show();
+                    }else {
+                        new Alert(Alert.AlertType.ERROR,"UserName & Password  Wrong !").show();
+                    }
                 }
 
             }
+
+
 
         }
 
