@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
         ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
         customerEntities.forEach(customerEntity -> {
-            System.out.println("<<<<<<<<<<<<<<<<<<<< "+customerEntity);
+            System.out.println(customerEntity);
             customersList.add(new ObjectMapper().convertValue(customerEntity, Customer.class) );
         });
 

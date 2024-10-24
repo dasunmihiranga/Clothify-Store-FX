@@ -42,7 +42,7 @@ public class OrderDaoImpl implements OrderDao {
             });
 
             list.forEach(orderEntity -> {
-                System.out.println("--------> "+orderEntity);
+                System.out.println(orderEntity);
                 orderEntityList.add(orderEntity);
             });
 

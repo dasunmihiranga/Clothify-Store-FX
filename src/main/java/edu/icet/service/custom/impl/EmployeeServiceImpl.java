@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         ObservableList<Employee> employeeList = FXCollections.observableArrayList();
 
         employeeEntities.forEach(employeeEntity -> {
-            System.out.println("<<<<<<<<<<<<<<<<<<<< "+employeeEntity);
+            System.out.println(employeeEntity);
             employeeList.add(new ObjectMapper().convertValue(employeeEntity, Employee.class) );
         });
 

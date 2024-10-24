@@ -41,7 +41,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             session.getTransaction().commit();
 
             list.forEach(employeeEntity -> {
-                System.out.println("--------> "+employeeEntity);
+                System.out.println(employeeEntity);
                 employeeEntityList.add(employeeEntity);
             });
 

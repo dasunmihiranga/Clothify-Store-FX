@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
             String customerId = orderEntity.getCustomer().getId();
             Double netTotal = orderEntity.getNetTotal();
 
-            //System.out.println("<<<<<<<<<<<<<<<<<<<< "+orderEntity);
+
             orderList.add(new ViewOrderTblObj(id,date,netTotal,customerId) );
         });
         return orderList;

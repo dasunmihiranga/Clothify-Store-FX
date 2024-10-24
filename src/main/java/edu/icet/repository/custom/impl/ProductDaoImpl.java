@@ -33,7 +33,7 @@ public class ProductDaoImpl implements ProductDao {
             session.getTransaction().commit();
 
             list.forEach(productEntity-> {
-                System.out.println("--------> "+productEntity);
+                System.out.println(productEntity);
                 productEntityList.add(productEntity);
             });
 

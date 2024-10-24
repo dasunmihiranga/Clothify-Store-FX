@@ -104,7 +104,7 @@ public class ViewOrderFormController implements Initializable {
         if (lblTitle.getText().equals("Admin Page")) {
             sceneSwitch.switchScene(Anchor, "customer_form.fxml");
         } else if (lblTitle.getText().equals("Employee Page")) {
-            System.out.println("Hello");
+            sceneSwitch.switchScene(Anchor, "customer_E_form.fxml");
 
         }
 

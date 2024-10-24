@@ -100,7 +100,7 @@ public class EmployeeFormController  implements Initializable {
         if (!txtName.getText().equals("") && validator.isValidEmail(txtEmail.getText()) &&!txtPassword.getText().equals("") && !txtAddress.getText().equals("")) {
 
             boolean b=employeeService.addEmployee(employee);
-            if (b) {
+            if (b){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Employee Added");
                 alert.setContentText("Employee Added Successfully..!");
@@ -142,7 +142,7 @@ public class EmployeeFormController  implements Initializable {
     }
 
     @FXML
-    void UpdatebtnOnAction(ActionEvent event) {
+    void UpdatebtnOnAction(ActionEvent event){
         if (!txtEmail.getText().equals("") && !txtAddress.getText().equals("") && !txtName.getText().equals("")){
             Employee employee = new Employee(
                     txtId.getText(),
@@ -161,9 +161,8 @@ public class EmployeeFormController  implements Initializable {
                 clear();
                 loadTable();
                 txtId.setText(employeeService.generateEmployeeId());
-
             }
-        }else {
+        }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Something Missing");
             alert.setContentText("Please Check your Form again..!!!");
@@ -172,7 +171,6 @@ public class EmployeeFormController  implements Initializable {
 
     }
     public void clear(){
-
         txtId.setText("");
         txtName.setText("");
         txtEmail.setText("");
@@ -218,6 +216,15 @@ public class EmployeeFormController  implements Initializable {
         tblEmployee.setItems(employeeService.getAllEmployee());
 
     }
+    public void btnLoginOnAction(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting");
+        alert.setContentText("Are you sure want Log out !");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get()== ButtonType.OK){
+            sceneSwitch.switchScene(Anchor,"login_form.fxml");
+        }
+    }
 
 
 
@@ -258,13 +265,5 @@ public class EmployeeFormController  implements Initializable {
 
     }
 
-    public void btnLoginOnAction(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Deleting");
-        alert.setContentText("Are you sure want Log out !");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get()== ButtonType.OK){
-            sceneSwitch.switchScene(Anchor,"login_form.fxml");
-        }
-    }
+
 }

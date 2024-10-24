@@ -144,7 +144,7 @@
     -fx-background-color: rgba(0, 0, 0, 0.1); /* Hover effect on list items */
 }
 
-#txtUserName,#txtPassword {
+#txtUserName,#txtPassword1 {
     -fx-background-color: white;
     -fx-border-color: #789ADE;
     -fx-border-width: 2px;

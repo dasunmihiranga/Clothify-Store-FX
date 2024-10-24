@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
         ObservableList<Product> productList = FXCollections.observableArrayList();
 
         productEntities.forEach(productEntity -> {
-            System.out.println("<<<<<<<<<<<<<<<<<<<< "+productEntity);
+            System.out.println(productEntity);
             productList.add(new ObjectMapper().convertValue(productEntity, Product.class) );
         });
 

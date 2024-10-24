@@ -28,7 +28,7 @@ public class SupplierServiceImpl implements SupplierService {
         ObservableList<Supplier> supplierList = FXCollections.observableArrayList();
 
         supplierEntities.forEach(supplierEntity -> {
-            System.out.println("<<<<<<<<<<<<<<<<<<<< "+supplierEntity);
+            System.out.println(supplierEntity);
             supplierList.add(new ObjectMapper().convertValue(supplierEntity, Supplier.class) );
         });
 

@@ -33,7 +33,7 @@ public class CustomerDaoImpl implements CustomerDao {
             session.getTransaction().commit();
 
             list.forEach(customerEntity -> {
-                System.out.println("--------> "+customerEntity);
+                System.out.println(customerEntity);
                 customerEntityList.add(customerEntity);
             });
 

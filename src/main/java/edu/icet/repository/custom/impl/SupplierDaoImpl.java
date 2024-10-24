@@ -33,7 +33,7 @@ public class SupplierDaoImpl implements SupplierDao {
             session.getTransaction().commit();
 
             list.forEach(supplierEntity -> {
-                System.out.println("--------> "+supplierEntity);
+                System.out.println(supplierEntity);
                 supplierEntityList.add(supplierEntity);
             });
 
